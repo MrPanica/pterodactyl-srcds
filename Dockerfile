@@ -75,6 +75,9 @@ RUN set -eux; \
         libunwind8 \
         libuuid1 \
         libz1; \
+    # SteamCMD/readline still probes for legacy SONAMEs on some paths.
+    ln -sf /usr/lib/i386-linux-gnu/libtinfo.so.6 /usr/lib/i386-linux-gnu/libtinfo.so.5; \
+    ln -sf /usr/lib/i386-linux-gnu/libncurses.so.6 /usr/lib/i386-linux-gnu/libncurses.so.5; \
     locale-gen en_US.UTF-8; \
     update-locale LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8; \
     curl -fsSL "https://github.com/gorcon/rcon-cli/releases/download/v${RCON_VERSION}/rcon-${RCON_VERSION}-amd64_linux.tar.gz" -o /tmp/rcon.tar.gz; \

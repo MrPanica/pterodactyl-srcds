@@ -27,7 +27,7 @@ cd /home/container || {
 ulimit -n "${ULIMIT_NOFILE:-262144}" 2>/dev/null || true
 ulimit -u "${ULIMIT_NPROC:-16384}" 2>/dev/null || true
 
-if [[ "${AUTO_UPDATE}" == "1" ]] || [[ -z "${AUTO_UPDATE}" ]]; then
+if [[ "${AUTO_UPDATE}" == "1" ]]; then
     if [[ -n "${SRCDS_APPID}" ]]; then
         info "Checking / updating SteamCMD ..."
 
@@ -76,7 +76,7 @@ if [[ "${AUTO_UPDATE}" == "1" ]] || [[ -z "${AUTO_UPDATE}" ]]; then
         warn "No SRCDS_APPID set - skipping SteamCMD update, starting server directly."
     fi
 else
-    info "AUTO_UPDATE=0 - skipping SteamCMD update."
+    info "AUTO_UPDATE is disabled - skipping SteamCMD update."
 fi
 
 if [[ "${SOURCEMOD}" == "1" ]] && [[ -n "${SM_GAME}" ]]; then
