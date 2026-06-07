@@ -14,7 +14,7 @@ error() { echo -e "${RED}[ERROR]${RESET} $*"; }
 
 echo -e "${CYAN}"
 echo "============================================================"
-echo "  Pterodactyl Source Engine - Ubuntu 24.04 Image"
+echo "  Pterodactyl Source Engine - Ubuntu ${UBUNTU_VERSION:-unknown} Image"
 echo "  TF2 / CS:S / GMod / L4D2 / SRCDS optimized"
 echo "============================================================"
 echo -e "${RESET}"

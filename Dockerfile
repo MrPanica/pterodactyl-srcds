@@ -1,14 +1,21 @@
 ARG UBUNTU_VERSION=24.04
 ARG LIBICU_PKG=libicu74
+ARG IMAGE_REPO_URL="https://github.com/${GITHUB_REPOSITORY}"
 
 FROM ubuntu:${UBUNTU_VERSION}
 
 ARG UBUNTU_VERSION
 ARG LIBICU_PKG
+ARG IMAGE_REPO_URL
 
 LABEL maintainer="custom"
 LABEL description="Pterodactyl Source Engine image for TF2/SRCDS on Ubuntu ${UBUNTU_VERSION}"
 LABEL org.opencontainers.image.base.name="ubuntu:${UBUNTU_VERSION}"
+LABEL org.opencontainers.image.title="steamcmd"
+LABEL org.opencontainers.image.description="Pterodactyl Source Engine image for TF2/SRCDS on Ubuntu ${UBUNTU_VERSION} LTS"
+LABEL org.opencontainers.image.source="${IMAGE_REPO_URL}"
+LABEL org.opencontainers.image.url="${IMAGE_REPO_URL}"
+LABEL org.opencontainers.image.documentation="${IMAGE_REPO_URL}"
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
@@ -17,6 +24,7 @@ ARG RCON_VERSION=0.10.3
 ENV DEBIAN_FRONTEND=noninteractive \
     USER=container \
     HOME=/home/container \
+    UBUNTU_VERSION=${UBUNTU_VERSION} \
     STEAMCMD_DIR=/home/container/steamcmd \
     LD_LIBRARY_PATH=/home/container/linux64:/home/container/bin:/home/container \
     LANG=C.UTF-8 \

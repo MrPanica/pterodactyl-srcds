@@ -77,6 +77,7 @@ jobs:
           build-args: |
             UBUNTU_VERSION=${{ matrix.ubuntu_version }}
             LIBICU_PKG=${{ matrix.libicu_pkg }}
+            IMAGE_REPO_URL=${{ github.server_url }}/${{ github.repository }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha,scope=ubuntu-${{ matrix.ubuntu_version }}
