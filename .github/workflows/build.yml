@@ -1,4 +1,4 @@
-name: Build and Push - srcds-ubuntu2404
+name: Build and Push - srcds-lts
 
 on:
   push:
@@ -24,6 +24,22 @@ jobs:
     permissions:
       contents: read
       packages: write
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - ubuntu_version: "24.04"
+            libicu_pkg: "libicu74"
+            tags: |
+              type=raw,value=ubuntu_24.04
+              type=raw,value=ubuntu_24.04_srcds
+              type=raw,value=srcds-noble
+          - ubuntu_version: "26.04"
+            libicu_pkg: "libicu78"
+            tags: |
+              type=raw,value=ubuntu_26.04
+              type=raw,value=ubuntu_26.04_srcds
+              type=raw,value=srcds-resolute
 
     steps:
       - name: Checkout
@@ -48,9 +64,8 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
-            type=raw,value=ubuntu_24.04_srcds
-            type=raw,value=srcds-noble
-            type=sha,prefix=sha-
+            ${{ matrix.tags }}
+            type=sha,prefix=sha-,suffix=-ubuntu-${{ matrix.ubuntu_version }}
 
       - name: Build and push
         uses: docker/build-push-action@v7
@@ -59,7 +74,10 @@ jobs:
           file: ./Dockerfile
           platforms: linux/amd64
           push: true
+          build-args: |
+            UBUNTU_VERSION=${{ matrix.ubuntu_version }}
+            LIBICU_PKG=${{ matrix.libicu_pkg }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+          cache-from: type=gha,scope=ubuntu-${{ matrix.ubuntu_version }}
+          cache-to: type=gha,mode=max,scope=ubuntu-${{ matrix.ubuntu_version }}

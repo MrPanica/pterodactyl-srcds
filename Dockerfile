@@ -1,8 +1,14 @@
-FROM ubuntu:24.04
+ARG UBUNTU_VERSION=24.04
+ARG LIBICU_PKG=libicu74
+
+FROM ubuntu:${UBUNTU_VERSION}
+
+ARG UBUNTU_VERSION
+ARG LIBICU_PKG
 
 LABEL maintainer="custom"
-LABEL description="Pterodactyl Source Engine image for TF2/SRCDS on Ubuntu 24.04"
-LABEL org.opencontainers.image.base.name="ubuntu:24.04"
+LABEL description="Pterodactyl Source Engine image for TF2/SRCDS on Ubuntu ${UBUNTU_VERSION}"
+LABEL org.opencontainers.image.base.name="ubuntu:${UBUNTU_VERSION}"
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
@@ -50,7 +56,7 @@ RUN set -eux; \
         libcurl3t64-gnutls:i386 \
         libfreetype6:i386 \
         libgcc-s1:i386 \
-        libicu74:i386 \
+        ${LIBICU_PKG}:i386 \
         libncurses6:i386 \
         libnss3:i386 \
         libopenal1:i386 \
@@ -64,7 +70,7 @@ RUN set -eux; \
         libcurl4t64 \
         libfreetype6 \
         libgcc-s1 \
-        libicu74 \
+        ${LIBICU_PKG} \
         libncurses6 \
         libnss3 \
         libopenal1 \

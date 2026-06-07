@@ -1,0 +1,13 @@
+[Unit]
+Description=TF2 QoS shaping and traffic prioritization
+After=network-online.target docker.service
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+Environment=WAN_RATE=950mbit
+ExecStart=/usr/local/sbin/tf2-qos-setup.sh
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
